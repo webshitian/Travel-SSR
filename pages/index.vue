@@ -26,14 +26,15 @@
                 <el-row 
                 type="flex" 
                 class="search-tab">
-                    <span>
-                        <i>攻略</i>
-                    </span>
-                    <span>
-                        <i>机票</i>
-                    </span>
-                    <span>
-                        <i>酒店</i>
+                    <span 
+                    v-for="(item,index) in options"
+                    :key="index"
+                    @click="handleTabChange(index)"
+                    :class="{
+                      active:current === index
+                    }"
+                    >
+                        <i>{{item.title}}</i>
                     </span>
                 </el-row>
                 
@@ -42,7 +43,7 @@
                 type="flex" 
                 align="middle" 
                 class="search-input">
-                    <input placeholder="请输入搜索攻略"/>
+                    <input :placeholder="options[current].placeholder"/>
                     <i class="el-icon-search"></i>
                 </el-row>
             </div>
@@ -56,6 +57,15 @@ export default {
     return{
       banners:[],//轮播图数据
       
+      //tab的数据结构！！！(重点在于自己会构造出数据结构)
+      options:[
+        {title:"攻略",placeholder:"请输入搜索攻略"},
+        {title:"酒店",placeholder:"请输入搜索酒店"},
+        {title:"机票",placeholder:""},
+      ],
+
+      //tab栏的索引
+      current:0
     }
   },
 
@@ -69,6 +79,17 @@ export default {
         //赋值给banners
         this.banners = data;
     })
+  },
+
+  methods:{
+    //点击tab栏时候触发
+    handleTabChange(index){
+        this.current = index;
+
+        if(index === 2){
+            this.$router.push("/air")
+        }
+    }
   }
 }
 </script>
