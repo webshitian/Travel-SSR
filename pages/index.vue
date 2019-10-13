@@ -11,7 +11,7 @@
             :key="index">
                 <div class="banner-image" 
                 :style="`
-                background:url(${item.url}) center center no-repeat;
+                background:url(${$axios.defaults.baseURL + item.url}) center center no-repeat;
                 background-size:contain contain;
                 `">
                 </div>
@@ -24,12 +24,21 @@
 export default {
   data(){
     return{
-      banners:[
-      {url:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3246446161,4096884020&fm=26&gp=0.jpg"},
-      {url:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3487005246,2909598293&fm=26&gp=0.jpg"},
-      {url:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=285860789,4153913836&fm=26&gp=0.jpg"}
-    ]
+      banners:[],//轮播图数据
+      
     }
+  },
+
+  mounted(){
+    //请求轮播图数据
+    this.$axios({
+        url:"/scenics/banners"
+    }).then(res => {
+        const {data} = res.data;
+        
+        //赋值给banners
+        this.banners = data;
+    })
   }
 }
 </script>

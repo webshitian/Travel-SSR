@@ -53,6 +53,7 @@ export default {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: "http://157.122.54.189:9095" // 新增备用地址
+    // 这里配置的时候没有专门的指定defaults,但是它自动生成，还是会挂载到defaults
     baseURL: "http://127.0.0.1:1337" // 新增axios默认请求路径 		  
   },
 
