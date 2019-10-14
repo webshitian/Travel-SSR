@@ -124,6 +124,7 @@ export default {
             font-size: 14px;
             margin-left:10px;
             color:#666;
+            text-decoration:none;
 
             &:hover{
                 color:#409eff;

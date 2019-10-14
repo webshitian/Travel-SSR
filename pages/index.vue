@@ -69,17 +69,29 @@ export default {
     }
   },
 
-  mounted(){
-    //请求轮播图数据
-    this.$axios({
-        url:"/scenics/banners"
-    }).then(res => {
-        const {data} = res.data;
+  // mounted(){
+  //   //请求轮播图数据
+  //   this.$axios({
+  //       url:"/scenics/banners"
+  //   }).then(res => {
+  //       const {data} = res.data;
         
-        //赋值给banners
-        this.banners = data;
-    })
-  },
+  //       //赋值给banners
+  //       this.banners = data;
+  //   })
+  // }, 
+
+  async mounted(){
+    //请求轮播图数据
+
+    //返回一个pomise,res就是axios的resolve的参数(也就是说 .then 的回调函数的参数)
+    const res = await this.$axios({
+      url:"/scenics/banners"
+    });
+
+    const {data} = res.data;
+    this.banners = data;  
+},
 
   methods:{
     //点击tab栏时候触发
