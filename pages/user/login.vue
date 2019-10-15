@@ -36,7 +36,7 @@ import RegisterForm from "@/components/user/RegisterForm"
 export default {
     data(){
         return {
-            currentTab: 0
+            currentTab: 1
         }
     },
     

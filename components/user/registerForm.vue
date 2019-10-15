@@ -107,18 +107,59 @@ export default {
     },
     methods: {
         // 发送验证码
-        handleSendCaptcha(){
+        async handleSendCaptcha(){
 
+            if(!this.form.username){
+                this.$message.error("手机号码不能为空")
+                return;
+            }
+            const res = await this.$axios({
+                url:"/captchas",
+                method:"POST",
+                data:{
+                    tel:this.form.username //手机号码
+                }
+            });
+
+            // console.log(res)
+            const {code} = res.data;
+            //打印出手机的验证码
+            this.$message.success(`当前的手机验证码是:${code}`);
         },
 
 
         // 注册
         handleRegSubmit(){
         //    console.log(this.form)
-            this.$refs.form.validate(valid => {
+            this.$refs.form.validate(async valid => {
                 if(valid){
+                    //props是form里面除了checkPassword以外的属性
+                    const {checkPassword, ...props} = this.form
+
                     //请求组成的接口
-                    
+                    const res = await this.$axios({
+                        url:"/accounts/register",
+                        method:"POST",
+                        data:props
+                    })
+
+                    // console.log(res)
+
+                    if(res.status === 200){
+                        this.$message.success("注册成功");
+                        //注册成功后，跳转到首页
+                        this.$router.push('/')
+                        //把用户信息token保存到本地，在头部组件中显示用户数据
+                        const data = res.data
+                        
+                        //vuex不能通过直接赋值方式来修改state的值
+                        //this.$store.state.user.username = data.user.nickname;
+
+                        //通过调用mutation下的方法来修改state的值,commit方法调用mutation的方法
+                        //非常类似于$emit
+                        this.$store.commit("user/setUserInfo",data)
+
+                    }
                 }
             })
         }
