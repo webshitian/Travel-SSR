@@ -10,6 +10,8 @@ export const mutations = {
     //data是登录成功后返回的对象数据
     setUserInfo(state,data){
         state.userInfo = data;
+
+        
     }
 }
 
