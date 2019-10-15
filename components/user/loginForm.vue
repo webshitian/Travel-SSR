@@ -73,6 +73,16 @@ export default {
                                 this.$message.success("登录成功");
 
                                 //this.$router.push('/')
+                                //把用户信息token保存到本地，在头部组件中显示用户数据
+                                const data = res.data
+                                
+                                //vuex不能通过直接赋值方式来修改state的值
+                                //this.$store.state.user.username = data.user.nickname;
+
+                                //通过调用mutation下的方法来修改state的值,commit方法调用mutation的方法
+                                //非常类似于$emit
+                                this.$store.commit("user/setUsername",data.user.nickname)
+
                             }
                         }
                 
