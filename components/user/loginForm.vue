@@ -23,13 +23,30 @@
         <p class="form-text">
             <nuxt-link to="#">忘记密码</nuxt-link>
         </p>
-
+     
         <el-button 
         class="submit"
         type="primary"
-        @click="handleLoginSubmit">
+        @click="handleLoginSubmit"
+        >
             登录
         </el-button>
+           <!--
+        这里要添加@keyup.enter="handleLoginSubmit"按下键盘enter登录，由于
+        这里的el-button是一个组件，如果这个组件不触发按下键盘enter登录这个事件，
+        也就是没有办法实现登录。如果要实现就只能把el-button换成button，就可以。
+        -->
+        <!--
+        <button 
+        class="submit"
+        type="primary"
+        @click="handleLoginSubmit"
+        @keyup.enter="handleLoginSubmit"
+        >
+            登录
+        </button>
+        -->
+
     </el-form>
 
 </template>
@@ -55,6 +72,7 @@ export default {
             },
         }
     },
+    //vuex不能通过直接赋值方式来修改state的值 
     methods: {
         // 提交登录
          handleLoginSubmit(){

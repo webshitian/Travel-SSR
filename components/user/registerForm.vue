@@ -113,14 +113,10 @@ export default {
                 this.$message.error("手机号码不能为空")
                 return;
             }
-            const res = await this.$axios({
-                url:"/captchas",
-                method:"POST",
-                data:{
-                    tel:this.form.username //手机号码
-                }
-            });
-
+            
+            //调用action的方法
+            // this.$store.dispatch("user/sendCaptcha",this.form.username);返回的是一个promise对象
+            const res = await this.$store.dispatch("user/sendCaptcha",this.form.username);
             // console.log(res)
             const {code} = res.data;
             //打印出手机的验证码
