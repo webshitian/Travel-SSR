@@ -21,6 +21,7 @@
                 @select="handleDepartSelect"
                 class="el-autocomplete"
                 v-model="form.departCity"
+                @blur="handleDepartBlur"
                 ></el-autocomplete>
             </el-form-item>
             <el-form-item label="到达城市">
@@ -71,7 +72,10 @@ export default {
                 destCity: "",  // 到达城市
                 destCode: "",  // 到达城市代码
                 departDate: "", // 日期字符串
-            }
+            },
+
+            //存放newData的城市的数组
+            cities:[]
         }
     },
     methods: {
@@ -105,11 +109,33 @@ export default {
                     //一般市级单位没有广市市这种类型的命名
                     v.value = v.name.replace("市","");//
                     return v;
-                })
+                });
+                
+                //把newData赋值给data中的cities
+                this.cities = newData;
+
+                // console.log(newData)
+                //这种方法不行，因为这种方法，你想搜搜广元，当你输入广子的时候，自动选择第一个广州，无法输入广子开头的其他市
+                // if(newData.length > 0){
+                //     this.form.departCity = newData[0].value;
+                //     this.form.departCode = newData[0].sort;
+                // }
+                
                 
                 //展示到下拉列表
                 cb(newData)
             })
+            
+        },
+
+        //出发城市，失去焦点时候默认选中第一个
+        handleDepartBlur(){
+            // console.log(123);
+            // console.log(this.cities);
+            if(this.cities.length > 0){
+                this.form.departCity = this.cities[0].value;
+                this.form.departCode = this.cities[0].sort;
+            }
             
         },
 
