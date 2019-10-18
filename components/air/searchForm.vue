@@ -21,7 +21,7 @@
                 @select="handleDepartSelect"
                 class="el-autocomplete"
                 v-model="form.departCity"
-                @blur="handleDepartBlur"
+                @blur="handleBlur(`depart`)"
                 ></el-autocomplete>
             </el-form-item>
             <el-form-item label="到达城市">
@@ -31,7 +31,7 @@
                 @select="handleDestSelect"
                 class="el-autocomplete"
                 v-model="form.destCity"
-                @blur="handleDestBlur"
+                @blur="handleBlur(`dest`)"
                 ></el-autocomplete>
             </el-form-item>
             <el-form-item label="出发时间">
@@ -131,23 +131,36 @@ export default {
         },
 
         //出发城市，失去焦点时候默认选中第一个
-        handleDepartBlur(){
+        //type可能等于depart 或者 dest
+        handleBlur(type){
             // console.log(123);
             // console.log(this.cities);
-            if(this.cities.length > 0){
-                this.form.departCity = this.cities[0].value;
-                this.form.departCode = this.cities[0].sort;
-            }
+            // if(this.cities.length > 0){
+            //     if(type === 'depart'){
+            //         this.form.departCity = this.cities[0].value;
+            //         this.form.departCode = this.cities[0].sort;
+            //     }
+            //     if(type === 'dest'){
+            //         this.form.destCity = this.cities[0].value;
+            //         this.form.destCode = this.cities[0].sort;
+            //     }
+            // }
+            
+            //优化的判断
+            if(this.cities.length === 0) return;
+            
+            this.form[type + "City"] = this.cities[0].value;
+            this.form[type + "Code"] = this.cities[0].sort;
             
         },
 
-        handleDestBlur(){
-            if(this.cities.length > 0){
-                this.form.destCity = this.cities[0].value;
-                this.form.destCode = this.cities[0].sort;
-            }
+        // handleDestBlur(){
+        //     if(this.cities.length > 0){
+        //         this.form.destCity = this.cities[0].value;
+        //         this.form.destCode = this.cities[0].sort;
+        //     }
             
-        },
+        // },
 
         // 目标城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
