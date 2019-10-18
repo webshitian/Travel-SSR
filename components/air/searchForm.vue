@@ -39,7 +39,9 @@
                 <el-date-picker type="date" 
                 placeholder="请选择日期" 
                 style="width: 100%;"
-                @change="handleDate">
+                @change="handleDate"
+                v-model="form.departDate"
+                >
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="">
@@ -58,6 +60,8 @@
 </template>
 
 <script>
+//引入JavaScript日期处理类库
+import moment from "moment";
 export default {
     data(){
         return {
@@ -187,7 +191,8 @@ export default {
 
         // 确认选择日期时触发
         handleDate(value){
-             
+            //  console.log(moment(value).format(`YYYY-MM-DD`))
+            this.form.departDate = moment(value).format(`YYYY-MM-DD`);
         },
 
         // 触发和目标城市切换时触发
