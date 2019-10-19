@@ -202,42 +202,65 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-           console.info(this.form)
-            // const rules = {
-            //     departCity:{
-            //         //message是错误的信息，value是对应表单中的值
-            //         message:"请输入出发城市",value:this.form.departCity
-            //     },
-            //     destCity:{
-            //         message:"请输入到达城市",value:this.form.destCity
-            //     },
-            //     departDate:{
-            //         message:"请输入出发时间",value:this.form.departDate
-            //     }
-                
+        //console.info(this.form)
+        //判断如果输入的参数为空的时候，不给跳转
+            // if(!this.form.departCity){
+            //     this.$message.error("请输入出发城市")
+            //     return;
             // }
-            //循环rules这个对象，判断对象属性的value如果是空的，打印出message错误信息
-            // let valid = true;
+            // if(!this.form.destCity){
+            //     this.$message.error("请输入到达城市")
+            //     return;
+            // }
             
-            // Object.keys(rules).forEach(v => {
-            //     //只要有一次验证不通过，后台验证不用再执行
-            //     if(!valid) return;
+            //自定义验证
+            const rules = {
+                departCity:{
+                    //message是错误的信息，value是对应表单中的值
+                    message:"请输入出发城市",value:this.form.departCity
                 
-            //     const {message,value} = rules[v];
-            //     //对象属性的value如果是空的
-            //     if(!value){
-            //         this.$message.error(message)
-            //         //验证不通过
-            //         valid = false;
-            //     }
-            // })
+                },
+                deseCity:{
+                    message:"请输入到达城市",value:this.form.destCity
+                },
+                departDate:{
+                    message:"请选择出发时间",value:this.form.departDate
+                }
+            }
+            
+            //循环rules这个对象,判断对象属性的value如果是空的，打印出message错误信息
+            //Object.keys会接收一个对象，这个对象会返回由键值组成的数组
+            // console.log(Object.keys(rules))
+            //v代码key。指组数里面的每一项
+            let valid = true;
+             Object.keys(rules).forEach(v => {
+                    // console.log(v)
+                    //只要有一次验证不通过，后台验证不用再执行
+                    if(!valid) return;
+                    // 对象属性的value如果是空的
+                    // if(!rules[v].value){
+                    //     this.$message.error(rules[v].message)
+                    // }
+                
+                    const {message,value} = rules[v];
+                    //(!value)有一个值是空的，可以直接返回false
+                    if(!value){
+                        this.$message.error(message)
+                        valid = false;
+                    }
+            })
+            // console.log(valid)
 
-            // if(!valid) return;
+            if(!valid) return;
 
             // this.$router.push({
+            //     //对象的方式可以通过path来指定链接
             //     path:"/air/flights",
+            //     //通过query获取链接?问号后面的参数
             //     query:this.form
+
             // })
+            
         }
 
         
